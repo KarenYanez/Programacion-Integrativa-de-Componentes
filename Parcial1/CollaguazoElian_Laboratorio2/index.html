@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="components/header.js"></script>
+    <script src="components/footer.js"></script>
+    <script src="components/main.js"></script>
+    <script src="components/menu.js"></script>
+    <script src="components/social-profile.js"></script>
+    <script src="components/custom-table.js"></script>
+    <script src="components/gallery.js"></script>
+    <title>Laboratorio 2 - Collaguazo Elian</title>
+</head>
+<body>
+    <app-header></app-header>
+    <app-menu></app-menu>
+    <app-main></app-main>
+    <app-footer></app-footer>
+
+    <script>
+        const main = document.querySelector('app-main');
+        document.querySelector('app-menu').addEventListener('navigate', (e) => {
+            const page = e.detail;
+            main.innerHTML = `<${page === 'profile' ? 'social-profile' : page === 'table' ? 'custom-table' : 'gallery-page'}></${page}>`;
+        });
+    </script>
+</body>
+</html>

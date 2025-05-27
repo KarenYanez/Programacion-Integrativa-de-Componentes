@@ -1,3 +1,4 @@
+// components/data-crud.js
 class DataCrud extends HTMLElement {
   constructor() {
     super();

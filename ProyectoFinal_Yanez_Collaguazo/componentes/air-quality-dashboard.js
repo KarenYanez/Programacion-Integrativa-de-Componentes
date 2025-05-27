@@ -12,7 +12,7 @@ class AirQualityDashboard extends HTMLElement {
   fetchAirData = async () => {
     try {
       // Simulación con datos estáticos o se puede reemplazar con una API real
-      const response = await fetch("https://run.mocky.io/v3/2ea2871b-a7e1-4de1-b66a-f8c7ddf57f05"); // Puedes usar también una API real
+      const response = await fetch('./data.json'); // Puedes usar también una API real
       if (!response.ok) throw new Error('Error al obtener los datos');
       this.data = await response.json();
       this.render();

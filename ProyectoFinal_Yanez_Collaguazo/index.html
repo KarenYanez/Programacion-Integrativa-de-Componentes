@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AirGuard - Calidad del Aire</title>
+</head>
+<body>
+
+  <main-menu></main-menu>
+  <nav-sidebar></nav-sidebar>
+
+  <section id="contenido">
+    <air-quality-dashboard></air-quality-dashboard>
+    <air-quality-chart></air-quality-chart>
+    <user-recommendations></user-recommendations>
+    <educational-section></educational-section>
+  </section>
+
+  <script type="module" src="./componentes/main-menu.js"></script>
+  <script type="module" src="./componentes/nav-sidebar.js"></script>
+  <script type="module" src="./componentes/air-quality-dashboard.js"></script>
+  <script type="module" src="./componentes/air-quality-chart.js"></script>
+  <script type="module" src="./componentes/user-recommendations.js"></script>
+  <script type="module" src="./componentes/educational-section.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+</body>
+</html>

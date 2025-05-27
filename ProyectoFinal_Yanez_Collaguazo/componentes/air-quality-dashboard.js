@@ -12,7 +12,7 @@ class AirQualityDashboard extends HTMLElement {
   fetchAirData = async () => {
     try {
       // Simulación con datos estáticos o se puede reemplazar con una API real
-      const response = await fetch('./data.json'); // Puedes usar también una API real
+      const response = await fetch('http://localhost:3000/calidad_aire'); // Puedes usar también una API real
       if (!response.ok) throw new Error('Error al obtener los datos');
       this.data = await response.json();
       this.render();

@@ -1,8 +1,12 @@
 class DataCrud extends HTMLElement {
   constructor() {
     super();
-    this.attachShadow({ mode: 'open' });
-    this.recomendaciones = JSON.parse(localStorage.getItem('recomendaciones')) || [];
+    this.attachShadow({ mode: "open" });
+    this.recommendations = [
+      { id: 1, texto: "Usa mascarilla en días contaminados" },
+      { id: 2, texto: "Evita hacer ejercicio al aire libre durante alertas" }
+    ];
+    this.editingId = null;
   }
 
   connectedCallback() {
@@ -52,6 +56,20 @@ class DataCrud extends HTMLElement {
     this.render();
   }
 
+  // Cargar desde localStorage
+  loadFromStorage = () => {
+    const data = localStorage.getItem("airguard-recommendations");
+    return data ? JSON.parse(data) : [
+      { id: 1, texto: "Usa mascarilla en días contaminados" },
+      { id: 2, texto: "Evita hacer ejercicio al aire libre durante alertas" }
+    ];
+  };
+
+  // Guardar en localStorage
+  saveToStorage = () => {
+    localStorage.setItem("airguard-recommendations", JSON.stringify(this.recommendations));
+  };
+
   render() {
     this.shadowRoot.innerHTML = `
       <style>
@@ -94,25 +112,71 @@ class DataCrud extends HTMLElement {
           margin-left: 0.5em;
         }
       </style>
-      <h3>Gestión de Recomendaciones</h3>
-      <form id="form">
-        <input type="hidden" id="id">
-        <input type="text" id="recomendacion" placeholder="Nueva recomendación">
-        <button type="submit">Guardar</button>
-      </form>
-      <ul>
-        ${this.recomendaciones.map(r => `
-          <li>
-            ${r.texto}
-            <span class="actions">
-              <button onclick="this.getRootNode().host.editarRecomendacion(${r.id})">✏️</button>
-              <button onclick="this.getRootNode().host.eliminarRecomendacion(${r.id})">🗑️</button>
-            </span>
-          </li>
-        `).join('')}
-      </ul>
+
+      <div class="container">
+        <h2>Recomendaciones de Protección</h2>
+        <form id="recommendation-form">
+          <input type="text" id="reco-input" placeholder="Escribe una recomendación" required />
+          <button type="submit">${this.editingId ? "Actualizar" : "Agregar"}</button>
+        </form>
+        <ul>
+          ${this.recommendations.map(r => `
+            <li>
+              ${r.texto}
+              <div class="actions">
+                <button class="edit" data-id="${r.id}">Editar</button>
+                <button class="delete" data-id="${r.id}">Eliminar</button>
+              </div>
+            </li>
+          `).join("")}
+        </ul>
+      </div>
     `;
-  }
+
+    this.shadowRoot.getElementById("recommendation-form").onsubmit = this.handleSubmit;
+
+    this.shadowRoot.querySelectorAll(".edit").forEach(btn => {
+      btn.onclick = () => this.editReco(btn.dataset.id);
+    });
+
+    this.shadowRoot.querySelectorAll(".delete").forEach(btn => {
+      btn.onclick = () => this.deleteReco(btn.dataset.id);
+    });
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const input = this.shadowRoot.getElementById("reco-input");
+    const texto = input.value.trim();
+
+    if (!texto) return;
+
+    if (this.editingId) {
+      const reco = this.recommendations.find(r => r.id == this.editingId);
+      reco.texto = texto;
+      this.editingId = null;
+    } else {
+      const nueva = {
+        id: Date.now(),
+        texto
+      };
+      this.recommendations.push(nueva);
+    }
+
+    input.value = "";
+    this.render();
+  };
+
+  editReco = (id) => {
+    const reco = this.recommendations.find(r => r.id == id);
+    this.editingId = id;
+    this.shadowRoot.getElementById("reco-input").value = reco.texto;
+  };
+
+  deleteReco = (id) => {
+    this.recommendations = this.recommendations.filter(r => r.id != id);
+    this.render();
+  };
 }
 
-customElements.define('data-crud', DataCrud);
+customElements.define("user-recommendations", UserRecommendations);

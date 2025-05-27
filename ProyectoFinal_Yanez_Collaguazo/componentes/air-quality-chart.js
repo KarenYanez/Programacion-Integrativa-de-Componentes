@@ -11,7 +11,7 @@ class AirQualityChart extends HTMLElement {
 
   loadData = async () => {
     try {
-      const response = await fetch('./data.json');
+      const response = await fetch("https://run.mocky.io/v3/2ea2871b-a7e1-4de1-b66a-f8c7ddf57f05");
       if (!response.ok) throw new Error('Error al obtener datos');
       const data = await response.json();
       this.renderChart(data);

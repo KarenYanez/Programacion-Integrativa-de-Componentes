@@ -2,16 +2,27 @@ class UserRecommendations extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
-    this.recommendations = [
-      { id: 1, texto: "Usa mascarilla en días contaminados" },
-      { id: 2, texto: "Evita hacer ejercicio al aire libre durante alertas" }
-    ];
+    this.recommendations = this.loadFromStorage();
     this.editingId = null;
   }
 
   connectedCallback() {
     this.render();
   }
+
+  // Cargar desde localStorage
+  loadFromStorage = () => {
+    const data = localStorage.getItem("airguard-recommendations");
+    return data ? JSON.parse(data) : [
+      { id: 1, texto: "Usa mascarilla en días contaminados" },
+      { id: 2, texto: "Evita hacer ejercicio al aire libre durante alertas" }
+    ];
+  };
+
+  // Guardar en localStorage
+  saveToStorage = () => {
+    localStorage.setItem("airguard-recommendations", JSON.stringify(this.recommendations));
+  };
 
   render = () => {
     this.shadowRoot.innerHTML = `
@@ -128,6 +139,7 @@ class UserRecommendations extends HTMLElement {
     }
 
     input.value = "";
+    this.saveToStorage(); // Guardar cambios
     this.render();
   };
 
@@ -139,6 +151,7 @@ class UserRecommendations extends HTMLElement {
 
   deleteReco = (id) => {
     this.recommendations = this.recommendations.filter(r => r.id != id);
+    this.saveToStorage(); // Guardar cambios
     this.render();
   };
 }

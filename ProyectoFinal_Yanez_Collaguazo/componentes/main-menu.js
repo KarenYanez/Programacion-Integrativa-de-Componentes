@@ -39,9 +39,9 @@ class MainMenu extends HTMLElement {
         <div class="logo">🌍 AirGuard</div>
         <div class="menu-items">
           <a href="#" data-section="dashboard">Inicio</a>
-          <a href="#" data-section="educativo">Educate</a>
-          <a href="#" data-section="recomendaciones">Recomendaciones</a>
-          <a href="#" data-section="acerca">Acerca</a>
+          <a href="#" data-section="educativo">Acerca de</a>
+          <a href="#" data-section="recomendaciones">Educate</a>
+          <a href="#" data-section="acerca">Login/Log Out</a>
         </div>
       </nav>
     `;

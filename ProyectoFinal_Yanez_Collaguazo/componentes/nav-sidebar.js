@@ -47,8 +47,8 @@ class NavSidebar extends HTMLElement {
       <aside>
         <h2>Menú</h2>
         <nav>
-          <a href="#" data-target="dashboard">📊 Dashboard</a>
-          <a href="#" data-target="recomendaciones">💡 Recomendaciones</a>
+          <a href="#" data-target="dashboard">📊 Dashboard</a><br>
+          <a href="#" data-target="recomendaciones">💡Recomendaciones</a><br>
           <a href="#" data-target="educativo">📚 Educativo</a>
         </nav>
       </aside>
